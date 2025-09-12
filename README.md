@@ -1,37 +1,69 @@
-# 🧩 Woerdle
-🇨🇭 Schwiizer-Wordle – Es Wordle uf Mundart (React)
+# React + TypeScript + Vite
 
-## 🎮 Über s Spiel
-**Woerdle** isch e Dialäkt-Version vom bekannte Wordle.  
-Statt englische Wörter muesch du hie **schwiizerdütschi Wörter** errate.  
-Du hesch **6 Versuech**, um s richtige Wörtli z finde.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-- ✅ Richtige Buechstabe am richtige Ort  
-- ⚠️ Richtige Buechstabe, aber am falsche Ort  
-- ❌ Buechstabe chunnt nöd im Wort vor  
+Currently, two official plugins are available:
 
-Ob Züritüütsch, Bärndütsch oder en andere Dialäkt – d’Wörterliste het e gueti Mischung us schwiizerdeutsche Ausdrück.  
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
----
+## Expanding the ESLint configuration
 
-## 🚀 Tech-Stack
-- React + Vite  
-- TypeScript  
-- Tailwind CSS  
-- Optional: shadcn/ui & lucide-react für UI/Icons  
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
----
+```js
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-## 🛠️ Installation & Entwicklung
-Voraussetzig: Node.js (>= 18)
+      // Remove tseslint.configs.recommended and replace with this
+      ...tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      ...tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      ...tseslint.configs.stylisticTypeChecked,
 
-```bash
-# Projekt klone
-git clone https://github.com/deinusername/woerdle.git
-cd woerdle
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-# Abhängigkeit installiere
-npm install
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-# Dev-Server starte
-npm run dev
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
